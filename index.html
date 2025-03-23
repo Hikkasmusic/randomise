@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генератор случайных чисел</title>
+    <link href="random.css" rel="stylesheet" type="text/css">
+    <style>
+        @font-face { font-family: MYRIADPRO-REGULAR; src: url('MYRIADPRO-REGULAR.OTF'); } 
+      h1 {
+         font-family: MYRIADPRO-REGULAR
+      }
+
+        body { font-family: MYRIADPRO-REGULAR;
+  font-weight: 300;
+  text-align: center;
+  font-size: 17px;
+  letter-spacing: 1px;
+  min-width: 720px;
+  min-height: 100vh;
+  background: #fff;
+  color: #000;
+}
+#timer {
+            font-size: 15px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+
+
+ 
+
+        input { padding: 5px; font-size: 16px; width: 100px; text-align: center; margin: 5px; }
+        h2 { font-size: 24px; }
+        button { padding: 10px 20px; font-size: 16px; cursor: pointer; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+   <img src="название.png" alt="картинка" class="responsive-image">
+    <div class="image-container">
+        <img src="string.png" alt="картинка" class="responsive-image">
+    </div>
+    
+    
+    
+    <h2 id="result"; class="custom-heading";>0</h2>
+
+    <script>
+        let forcedNumber = 6; // Подставное число
+        function generateRandomNumber() {
+            let count = localStorage.getItem("generateCount") || 0;
+            count = parseInt(count) + 1;
+            localStorage.setItem("generateCount", count);
+
+            let min = parseInt(document.getElementById("minValue").value) || 1;
+            let max = parseInt(document.getElementById("maxValue").value) || 100;
+
+            if (min > max) {
+                document.getElementById("result").innerText = "Ошибка: минимальное значение больше максимального!";
+                return;
+            }
+
+            let randomNumber;
+            if (count < 3) {
+                randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+            } else {
+                randomNumber = forcedNumber;
+                localStorage.removeItem("generateCount"); // Сброс после подставного числа
+            }
+
+            let resultElement = document.getElementById("result");
+            let iterations = 20;
+            let interval = setInterval(() => {
+                resultElement.innerText = "" + (Math.floor(Math.random() * (max - min + 1)) + min);
+                iterations--;
+                if (iterations <= 0) {
+                    clearInterval(interval);
+                    resultElement.innerText = "" + randomNumber;
+                }
+            }, 50);
+        }
+    </script>
+
+
+    <button class="button"; onclick="generateRandomNumber()">СЛУЧАЙНОЕ ЧИСЛО</button>
+<div id="timer">Сейчас: 28.03.2025 в </div>
+
+<script>
+    function updateTime() {
+        const now = new Date();
+        const options = { 
+            hour: '2-digit', 
+            minute: '2-digit', 
+            second: '2-digit', 
+            hour12: false 
+        };
+        document.getElementById('timer').innerText = 'Сейчас: 28.03.2025 в ' + now .toLocaleTimeString('ru-RU', options) + ' GMT +3';
+    }
+
+    // Обновляем время каждую секунду
+    setInterval(updateTime, 1000);
+    
+    // Обновляем время сразу при загрузке страницы
+    updateTime();
+
+</script>
+<div class="image-container">
+        <img src="string2.png" alt="картинка" class="responsive-image">
+    </div>
+    <p class="ppp">В ДИАПАЗОНЕ ОТ:</p>
+    <div class="flex">
+        <input class="input"; type="number" id="minValue" placeholder="Мин. значение">
+        <p> до </p>
+        <input class="input"; type="number" id="maxValue" placeholder="Макс. значение">
+    </div>
+    <br>
+    <div class="image-container">
+        <img src="колво.png" alt="картинка" class="responsive-image">
+        
+
+    </div>
+    <img src="соцсети.png" alt="картинка" class="responsive-image">
+
+</body>
+</html>
